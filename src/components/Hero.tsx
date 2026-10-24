@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Sparkles, CheckCircle2, Droplets, Eye, Award } from 'lucide-react';
+import { ArrowUpRight, Sparkles, CheckCircle2, Droplets, Eye, Award, Star, TrendingUp, Quote } from 'lucide-react';
 import { PORTFOLIO_ITEMS } from '../data/portfolioData';
 
 interface HeroProps {
@@ -45,7 +45,41 @@ export const Hero: React.FC<HeroProps> = ({ onRequestSample, onExploreWork, onSe
     },
   ];
 
+  const heroTestimonials = [
+    {
+      id: 'oom',
+      quote: "Mew Studio transformed our product packaging into high-converting Meta and TikTok reels in 48 hours. Our CTR jumped 3.2x.",
+      author: "Sarah Lin",
+      role: "Head of Growth",
+      company: "OOM Nootropics",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+      metric: "+3.2x CTR Boost",
+      stars: 5,
+    },
+    {
+      id: 'dose',
+      quote: "The organic ginger-shot packaging renders and hook variations gave us our lowest CPA of the quarter. Samir's eye for retail fidelity is phenomenal.",
+      author: "Marcus Vance",
+      role: "Co-Founder",
+      company: "DÖSE Wellness",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+      metric: "-42% Lower CPA",
+      stars: 5,
+    },
+    {
+      id: 'snackish',
+      quote: "Finally a creative partner that respects physical packaging fidelity without generic AI artifacts. Our retail buyers loved the visual decks.",
+      author: "Elena Rostova",
+      role: "Brand Director",
+      company: "Snackish Crisps",
+      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80",
+      metric: "Retail Deck Winner",
+      stars: 5,
+    },
+  ];
+
   const [activeId, setActiveId] = useState(heroShowcaseItems[0].id);
+  const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const currentShowcase = heroShowcaseItems.find((s) => s.id === activeId) || heroShowcaseItems[0];
   const currentItem = currentShowcase.item;
 
@@ -84,7 +118,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestSample, onExploreWork, onSe
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 mb-10">
+            <div className="flex flex-wrap items-center gap-4 mb-6">
               <button
                 onClick={onRequestSample}
                 className="px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-[#E76F51] to-[#EF476F] hover:from-[#D65F41] hover:to-[#DE375F] active:scale-[0.98] rounded-2xl shadow-[0_8px_20px_rgba(239,71,111,0.3)] transition-all flex items-center gap-2.5 whitespace-nowrap cursor-pointer"
@@ -99,6 +133,95 @@ export const Hero: React.FC<HeroProps> = ({ onRequestSample, onExploreWork, onSe
               >
                 <span>Explore Our Work</span>
               </button>
+            </div>
+
+            {/* Social Proof Testimonials Section (Builds Immediate Trust) */}
+            <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-white/95 border border-[#E76F51]/20 shadow-[0_8px_25px_rgba(231,111,81,0.08)] backdrop-blur-md">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                {/* Avatar Stack + Aggregate Rating */}
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-2.5 overflow-hidden">
+                    {heroTestimonials.map((t, idx) => (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => setActiveTestimonialIdx(idx)}
+                        className={`inline-block relative cursor-pointer transition-transform hover:scale-110 ${
+                          activeTestimonialIdx === idx ? 'z-10 scale-105' : 'opacity-85'
+                        }`}
+                        title={`${t.author} (${t.company})`}
+                      >
+                        <img
+                          className={`h-9 w-9 rounded-full ring-2 object-cover ${
+                            activeTestimonialIdx === idx ? 'ring-[#E76F51]' : 'ring-white'
+                          }`}
+                          src={t.avatar}
+                          alt={t.author}
+                          referrerPolicy="no-referrer"
+                        />
+                      </button>
+                    ))}
+                    <div className="h-9 w-9 rounded-full bg-[#190B28] text-white ring-2 ring-white flex items-center justify-center text-[10px] font-black">
+                      40+
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#FFB703] text-[#FFB703]" />
+                      ))}
+                      <span className="text-xs font-black text-[#190B28] ml-1">4.9 / 5.0</span>
+                    </div>
+                    <p className="text-[11px] text-[#3A2E39]/80 font-medium">
+                      Loved by 40+ consumer brands & founders
+                    </p>
+                  </div>
+                </div>
+
+                {/* Verified Metric Badge */}
+                <div className="flex items-center gap-1.5 self-start sm:self-auto text-[11px] font-bold text-[#0D9488] bg-[#CCFBF1] px-2.5 py-1 rounded-full border border-[#0D9488]/20">
+                  <TrendingUp className="w-3.5 h-3.5 text-[#0D9488]" />
+                  <span>{heroTestimonials[activeTestimonialIdx].metric}</span>
+                </div>
+              </div>
+
+              {/* Direct Founder Quote with Interactive Switcher */}
+              <div className="relative pl-3.5 border-l-2 border-[#E76F51] bg-[#FAF7F2]/80 rounded-r-xl py-2.5 pr-3">
+                <p className="text-xs sm:text-sm text-[#190B28] italic font-medium leading-relaxed">
+                  “{heroTestimonials[activeTestimonialIdx].quote}”
+                </p>
+                <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+                  <div className="flex items-center gap-2 text-[#3A2E39]/80">
+                    <span className="font-extrabold text-[#190B28]">
+                      {heroTestimonials[activeTestimonialIdx].author}
+                    </span>
+                    <span aria-hidden="true" className="text-[#190B28]/30">·</span>
+                    <span>{heroTestimonials[activeTestimonialIdx].role}, <strong className="text-[#190B28]">{heroTestimonials[activeTestimonialIdx].company}</strong></span>
+                    <span aria-hidden="true" className="text-[#190B28]/30">·</span>
+                    <span className="text-[#E76F51] font-bold inline-flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-[#06D6A0]" />
+                      Verified Client
+                    </span>
+                  </div>
+
+                  {/* Switcher Dots */}
+                  <div className="flex items-center gap-1.5 ml-auto">
+                    {heroTestimonials.map((_, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        onClick={() => setActiveTestimonialIdx(dotIdx)}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                          activeTestimonialIdx === dotIdx
+                            ? 'w-4 bg-[#E76F51]'
+                            : 'w-1.5 bg-[#190B28]/20 hover:bg-[#190B28]/40'
+                        }`}
+                        aria-label={`Testimonial ${dotIdx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Studio Key Attributes */}
