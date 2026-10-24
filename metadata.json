@@ -1,0 +1,6 @@
+{
+  "name": "Mew Studio – Advertising Creative Studio",
+  "description": "Boutique advertising creative studio producing high-impact product image advertisements, short-form video ads, and creative concepts for modern consumer brands.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

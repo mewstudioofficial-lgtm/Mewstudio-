@@ -1,0 +1,17 @@
+{
+  "name": "Beymax OS – Personal AI Companion",
+  "short_name": "Beymax",
+  "description": "Autonomous AI assistant inspired by Jarvis & Baymax, built for Samir.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060913",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/assets/beymax-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
